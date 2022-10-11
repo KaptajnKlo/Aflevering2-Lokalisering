@@ -22,6 +22,7 @@ def buildModel(data: dict) -> pyomo.ConcreteModel():
     model.AntalSygehuse = data['p']
     model.AntalKommuner = data['nrPoints']
     model.RangeAntalKommuner = range(0, len(model.kommuner))
+    model.budget_begrænsning = 29849347500
 
     # Define variables
     model.x = pyomo.Var(model.RangeAntalKommuner, model.RangeAntalKommuner, within=pyomo.Binary)
@@ -67,7 +68,7 @@ def buildModel(data: dict) -> pyomo.ConcreteModel():
 
     # Budget begrænsning med udgangspunkt i opgave 1 + 5%
     model.BudgetGrænse = pyomo.Constraint(
-        expr=(sum(model.fasteomkostninger[i]*model.y[i]*model.mia for i in model.RangeAntalKommuner)+sum(model.ekstraomkostninger[i]*model.z[i] for i in model.RangeAntalKommuner) <= 11038276200)
+        expr=(sum(model.fasteomkostninger[i]*model.y[i]*model.mia for i in model.RangeAntalKommuner)+sum(model.ekstraomkostninger[i]*model.z[i] for i in model.RangeAntalKommuner) <= model.budget_begrænsning)
     )
 
     #Repæsentant også i eget cluster
@@ -110,5 +111,5 @@ def main(instance_file_name):
 
 
 if __name__ == '__main__':
-    instance_file_name = 'StoreData'
+    instance_file_name = 'Faktiske'
     main(instance_file_name)

@@ -83,5 +83,5 @@ def main(instance_file_name):
 
 
 if __name__ == '__main__':
-    instance_file_name = 'Prøve'
+    instance_file_name = 'Faktiske'
     main(instance_file_name)
