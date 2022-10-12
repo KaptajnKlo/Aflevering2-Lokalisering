@@ -3,7 +3,6 @@ import readAndWriteJson as rwJson  # Used to read data from Json file
 
 def readData(filename: str) -> dict:
     data = rwJson.readJsonFileToDictionary(filename)
-    data['nrPoints'] = len(data['municipalities'])
     return data
 
 def buildModel(data: dict) -> pyomo.ConcreteModel():
@@ -20,7 +19,6 @@ def buildModel(data: dict) -> pyomo.ConcreteModel():
     model.distances = data['distances']
     model.travel_times = data['travel_times']
     model.AntalSygehuse = data['p']
-    model.AntalKommuner = data['nrPoints']
     model.RangeAntalKommuner = range(0, len(model.kommuner))
     model.budget_begrænsning = 29849347500
 
@@ -100,5 +98,5 @@ def main(instance_file_name):
 
 
 if __name__ == '__main__':
-    instance_file_name = 'Faktiske'
+    instance_file_name = 'Data'
     main(instance_file_name)
